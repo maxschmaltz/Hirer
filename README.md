@@ -1,175 +1,135 @@
-# Hirer: A simple hiring plan creator with GPT.
+# Hirer: A simple hiring plan creator with GPT-3.
+
+This repo contains a solution to a test task for an NLP Engineer position. The coding took about 1 h 15 min including testing, setting up the repo and writing the README. An update took about 20 min more afterwards.
+
+---
+
+### Table of Contents
+* [Quick Start](#quick-start)
+* [Input Parameters](#input-parameters)
+* [Returns](#returns)
+* [Example](#example)
+
+---
+
+## Quick Start
+
+```python
+from prepare import get_model
+from hiring_plan import hiring_plan
+
+params_path = '<path_to_your_params>'
+llm = get_model(params_path)
+
+desc = '<Your description>'
+response = hiring_plan(llm, desc)
+print(response)
+```
 
 
-### Input params:
+## Input Parameters:
 
-desc : `str` : the description of the hiring plan you want to get
+llm : `langchain.llms.base.BaseLLM`
+<ul>
+the LLM to generate the hiring plan with
+</ul>
+
+<br>
+
+desc : `str`
+<ul>
+the description of the hiring plan you want to get
+</ul>
+
 
 ## Returns:
 
-hiring_plan : `dict` : hiring plan; consists of the following fields:
-1. `positions`: `list[dict]` of positions; each position includes title (field `name`), yearly salary (`salary`) and bonus (`bonus`);
-2. `total_annual_salary`: summed annual salary for all proposed positions;
-3. `total_annual_bonus`: summed annual bonus for all proposed positions;
-4. `total_annual_cost`" summed annual salary + bonus for all proposed positions.
+hiring_plan : `dict`
+<ul>
+hiring plan; consists of the following fields:
+
+<br>
+
+`"positions"` : `list[dict]`
+    <ul>
+    list of positions encoded in `dict` each; each position includes title (field `"name"`), yearly salary (`"salary"`) and bonus (`"bonus"`)
+    </ul>
+
+<br>
+
+`"total_annual_salary"` : `int`
+    <ul>
+    summed annual salary for all proposed positions
+    </ul>
+
+<br>
+
+`"total_annual_bonus"` : `int`
+    <ul>
+    summed annual bonus for all proposed positions
+    </ul>
+
+<br>
+
+`"total_annual_cost"` : `int`
+    <ul>
+    summed annual salary + bonus for all proposed positions
+    </ul>
+</ul>
+
 
 ## Example:
 
+This example is available in [example.py](./example.py)
+
 ```python
-from langchain import OpenAI
+from prepare import get_model
 from hiring_plan import hiring_plan
 
-llm = OpenAI({
-    model='text-davinci-003',
-    temperature=0.35,
-    max_tokens=128
-})
+params_path = './params.json'
+llm = get_model(params_path)
 
+# The description is generated with ChatGPT
 desc = '''
-  Team 1:
-
-      - CEO: Joe Smith
-      - CFO: Sarah Johnson
-      - Marketing Manager: Tom Brown
-      - HR Manager: Lisa Jones
-      - IT Manager: Mike Williams
-      - Sales Manager: Jane Taylor
-      - Operations Manager: David White
-      - Accounting Manager: Karen Anderson
+    I need a hiring plan for a following team:
+    
+    1. Innovation Catalyst: Sparks creative ideas and guides exploration of new opportunities.
+    2. Execution Maestro: Plans, coordinates, and ensures smooth project implementation.
+    3. Analytics Guru: Analyzes data to provide actionable insights for decision-making.
+    4. Relationship Orchestrator: Builds and maintains strong relationships with stakeholders.
 '''
-
 plan = hiring_plan(llm, desc)
 print(plan)
 ```
 
-Output:
+Output (manually prettied):
 
 ```json
 {
     "positions": [
         {
-            "name": "Chief Executive Officer",
-            "salary": "200000",
-            "bonus": "100000"
+            "name": "Innovation Catalyst",
+            "salary": 70000,
+            "bonus": 5000
         },
         {
-            "name": "Manager",
-            "salary": "100000",
-            "bonus": "10000"
+            "name": "Execution Maestro",
+            "salary": 720000,
+            "bonus": 180000
         },
         {
-            "name": "Manager",
-            "salary": "100000",
-            "bonus": "10000"
+            "name": "Analytics Guru",
+            "salary": 80000,
+            "bonus": 10000
         },
         {
-            "name": "Chief Financial Officer",
-            "salary": "150000",
-            "bonus": "30000"
-        },
-        {
-            "name": "Senior Manager",
-            "salary": "90000",
-            "bonus": "18000"
-        },
-        {
-            "name": "Employee",
-            "salary": "720000",
-            "bonus": "160000"
-        },
-        {
-            "name": "Marketing Manager",
-            "salary": "70000",
-            "bonus": "10000"
-        },
-        {
-            "name": "Manager",
-            "salary": "80000",
-            "bonus": "8000"
-        },
-        {
-            "name": "Sales Representative",
-            "salary": "84000",
-            "bonus": "2100"
-        },
-        {
-            "name": "HR Manager",
-            "salary": "80000",
-            "bonus": "10000"
-        },
-        {
-            "name": "Senior Software Engineer",
-            "salary": "70000",
-            "bonus": "3500"
-        },
-        {
-            "name": "Software Engineer",
-            "salary": "72000",
-            "bonus": "6000"
-        },
-        {
-            "name": "IT Manager",
-            "salary": "70000",
-            "bonus": "5000"
-        },
-        {
-            "name": "Employee",
-            "salary": "60000",
-            "bonus": "6000"
-        },
-        {
-            "name": "Employee",
-            "salary": "50000",
-            "bonus": "2500"
-        },
-        {
-            "name": "Sales Manager",
-            "salary": "70000",
-            "bonus": "5000"
-        },
-        {
-            "name": "Employee",
-            "salary": "5000000",
-            "bonus": "250000"
-        },
-        {
-            "name": "Software Engineer",
-            "salary": "48000",
-            "bonus": "4000"
-        },
-        {
-            "name": "Operations Manager",
-            "salary": "80000",
-            "bonus": "10000"
-        },
-        {
-            "name": "Employee",
-            "salary": "40000",
-            "bonus": "0"
-        },
-        {
-            "name": "Sales Representative",
-            "salary": "36000",
-            "bonus": "3000"
-        },
-        {
-            "name": "Accounting Manager",
-            "salary": "70000",
-            "bonus": "10000"
-        },
-        {
-            "name": "Software Engineer",
-            "salary": "30000",
-            "bonus": "3000"
-        },
-        {
-            "name": "Sales Representative",
-            "salary": "20000",
-            "bonus": "2000"
+            "name": "Relationship Orchestrator",
+            "salary": 80000,
+            "bonus": 10000
         }
     ],
-    "total_annual_salary": 7390000,
-    "total_annual_bonus": 668100,
-    "total_annual_cost": 8058100
+    "total_annual_salary": 950000,
+    "total_annual_bonus": 205000,
+    "total_annual_cost": 1155000
 }
 ```

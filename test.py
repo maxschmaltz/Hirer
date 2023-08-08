@@ -14,7 +14,8 @@ class EployeeTest(unittest.TestCase):
     n_iters = 5
 
     def generate_test_employee(self):
-        desc = self.llm('Generate random job position description.') # to make testing faster we'll generate cases
+        # to make testing faster we'll generate cases
+        desc = self.llm('Generate random job position description.')
         print(f'{desc}\n')
         response = employee(self.llm, desc)
         print(f'{response}\n\n')
@@ -36,20 +37,22 @@ class HiringPlanTest(unittest.TestCase):
     params_path = './params.json'
     llm = get_model(params_path)
 
-    example_path = 'example.json'
+    # example_path = './example.json'
 
     n_iters = 3
 
-    def generate_test_hiring_plan(self):
-        desc = self.llm('Generate random team at in a small for-profit organization.') # to make testing faster we'll generate cases
-        print(f'{desc}\n')
-        employee_descs = process_desc(self.llm, desc)
-        print(f'{employee_descs}\n\n')
-        self.assertIsInstance(employee_descs, list)
+    # def generate_test_hiring_plan(self):
+    #     # to make testing faster we'll generate cases
+    #     desc = self.llm('Generate random team at in a small for-profit organization.')
+    #     print(f'{desc}\n')
+    #     employee_descs = process_desc(self.llm, desc)
+    #     print(f'{employee_descs}\n\n')
+    #     self.assertIsInstance(employee_descs, list)
 
 
     def generate_test_hiring_plan(self):
-        desc = self.llm('Generate random team for a small for-profit organization.') # to make testing faster we'll generate cases
+        # to make testing faster we'll generate cases
+        desc = self.llm('Generate a description of a random team for a small for-profit organization.')
         print(f'{desc}\n')
         response = hiring_plan(self.llm, desc)
         print(f'{response}\n\n')
@@ -61,7 +64,7 @@ class HiringPlanTest(unittest.TestCase):
         self.assertIsInstance(response['positions'], list)
         self.assertIsInstance(int(response['total_annual_salary']), int) # a numeric string
         self.assertIsInstance(int(response['total_annual_bonus']), int) # a numeric string
-        with open(self.example_path, 'w') as f: json.dump(response, f, indent=4)
+        # with open(self.example_path, 'w') as f: json.dump(response, f, indent=4)
 
 
     def test_hiring_plan(self):

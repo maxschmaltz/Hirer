@@ -1,4 +1,4 @@
-# Hirer: A simple hiring plan creator with GPT-3.
+# Hirer: A Simple LLM-Powered Hiring Plan Creator.
 
 This repo contains a solution to a test task for an NLP Engineer position. The coding took about 1 h 15 min including testing, setting up the repo and writing the README. An update took about 20 min more afterwards.
 
